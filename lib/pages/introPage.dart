@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sushi_app/components/button.dart';
+import 'package:sushi_app/utils/colors.dart';
 
 
 class IntroPage extends StatelessWidget {
@@ -8,7 +10,7 @@ class IntroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      backgroundColor: const Color.fromARGB(22, 237, 63, 37),
+      backgroundColor: AppColors.primaryColor,
       body: Padding(
         padding: const EdgeInsets.all(25),
         child: Column(
@@ -27,14 +29,32 @@ class IntroPage extends StatelessWidget {
              //icon
              Padding(
               padding: const EdgeInsets.all(20),
-              child: Image.asset("assets/images/suhsi3.png"),
-             )
+              child: Image.asset("assets/images/sushi3.png"),
+             ),
 
              //title//
+             Text("THE TASTE OF JAPANESE FOOD", style: GoogleFonts.dmSerifDisplay(
+              fontSize: 44,
+              color: Colors.white
+             )
+             ),
 
              //subtitle
+             Text("Feel the taste of the most popular japanese food from anywhere, anytime", style: TextStyle(
+              color: Colors.grey[200],
+              height: 2
+             )
+             ),
+
+             const SizedBox(height: 20,),
 
              //get started button
+              MyButton(text: "Get Started",
+              onTap: () { 
+                //going to the menu page
+                Navigator.pushNamed(context, "/menupage");
+               },
+             ),
           ],
         ),
       ),
