@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sushi_app/components/button.dart';
 import 'package:sushi_app/components/foodTile.dart';
 import 'package:sushi_app/model/foodModel.dart';
+import 'package:sushi_app/pages/foodDetail.dart';
 import 'package:sushi_app/utils/colors.dart';
 
 class MenuPage extends StatefulWidget {
@@ -16,23 +17,29 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   List foodMenu = [
     Food(
-    name: "Uramak",
-    imagePath: "assets/images/sushi1.png", 
-    price: "45", 
-    rating: "2.5"),
-
+        name: "Uramak",
+        imagePath: "assets/images/sushi1.png",
+        price: "45",
+        rating: "2.5"),
     Food(
-    name: "Nigiri",
-    imagePath: "assets/images/sushi2.png", 
-    price: "45", 
-    rating: "5"),
-
+        name: "Nigiri",
+        imagePath: "assets/images/sushi2.png",
+        price: "45",
+        rating: "5"),
     Food(
-    name: "Temaki",
-    imagePath: "assets/images/sushi3.png", 
-    price: "14", 
-    rating: "4.5"),
+        name: "Temaki",
+        imagePath: "assets/images/sushi3.png",
+        price: "14",
+        rating: "4.5"),
   ];
+
+  //navigate to food page detail
+  void navigateToFoodDetail(int index) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) =>  FoodDetail(
+          food: foodMenu[index],)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,8 +60,8 @@ class _MenuPageState extends State<MenuPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: EdgeInsets.all(25),
-            margin: EdgeInsets.symmetric(horizontal: 25),
+            padding: const EdgeInsets.all(25),
+            margin: const EdgeInsets.symmetric(horizontal: 25),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: AppColors.primaryColor),
@@ -118,47 +125,57 @@ class _MenuPageState extends State<MenuPage> {
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: foodMenu.length,
-              itemBuilder: (context, index) =>  FoodTile(
+              itemBuilder: (context, index) => FoodTile(
                 food: foodMenu[index],
+                onTap: () {
+                  navigateToFoodDetail(index);
+                },
               ),
-              ),
+            ),
           ),
-          const SizedBox(height: 25,),
+          const SizedBox(
+            height: 25,
+          ),
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20)
-            ),
+                color: Colors.white, borderRadius: BorderRadius.circular(20)),
             padding: EdgeInsets.all(20),
-            margin: const EdgeInsets.only(left: 20,right: 20,bottom: 20),
+            margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
             child: Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Image.asset("assets/images/sushi3.png",height: 100,),
-
-                    const SizedBox(width: 10,),
+                    Image.asset(
+                      "assets/images/sushi3.png",
+                      height: 100,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
                   ],
                 ),
-                //name and price 
+                //name and price
                 Column(
                   //crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    //name 
-                    Text("Salmon Egg", style: GoogleFonts.dmSerifDisplay(
-                      fontSize: 20,
-                      color: Colors.grey[600]
+                    //name
+                    Text("Salmon Egg",
+                        style: GoogleFonts.dmSerifDisplay(
+                            fontSize: 20, color: Colors.grey[600])),
+                    Text(
+                      "\$21.00",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[900]),
                     )
-                    ),
-                    Text("\$21.00", style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey[900]
-                    ),)
                   ],
                 ),
-                const Icon(Icons.favorite, color: Colors.red,)
+                const Icon(
+                  Icons.favorite,
+                  color: Colors.red,
+                )
               ],
             ),
           )
