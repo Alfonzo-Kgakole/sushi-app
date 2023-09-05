@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sushi_app/model/shop.dart';
+import 'package:sushi_app/pages/cartPage.dart';
 import 'package:sushi_app/pages/introPage.dart';
 import 'package:sushi_app/pages/menuPage.dart';
 import 'package:provider/provider.dart';
@@ -25,10 +26,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  IntroPage(),
+      home:  const IntroPage(),
       routes: {
         "/intropage":(context) => const IntroPage(),
-        "/menupage":(context) => const MenuPage()
+        "/menupage":(context) => const MenuPage(),
+        "/cartpage": (context) => const CartPage()
       },
     );
   }

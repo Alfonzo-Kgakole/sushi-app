@@ -22,7 +22,7 @@ class Shop extends ChangeNotifier {
   ];
 
   //customer cart
-  List<Food> _cart = [];
+  final List<Food> _cart = [];
 
   //getter method
   List<Food> get foodMenu => _foodMenu;
@@ -37,9 +37,9 @@ class Shop extends ChangeNotifier {
   }
 
   //remove food from Items
-  void removeToCart() {
+  void removeFromCart(Food food) {
     // ignore: list_remove_unrelated_type
-    _cart.remove(Food);
+    _cart.remove(food);
     notifyListeners();
   }
 }

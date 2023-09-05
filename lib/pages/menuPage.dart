@@ -17,8 +17,6 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  
-
   //navigate to food page detail
   void navigateToFoodDetail(int index) {
     //get the shop and its menu
@@ -29,7 +27,7 @@ class _MenuPageState extends State<MenuPage> {
         MaterialPageRoute(
             builder: (context) => FoodDetail(
                   food: foodMenu[index],
-      )));
+                )));
   }
 
   @override
@@ -39,6 +37,16 @@ class _MenuPageState extends State<MenuPage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "/cartpage");
+              },
+              icon: Icon(
+                Icons.shopping_cart,
+                color: Colors.grey[900],
+              ))
+        ],
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: Icon(
@@ -53,6 +61,9 @@ class _MenuPageState extends State<MenuPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(
+            height: 20,
+          ),
           Container(
             padding: const EdgeInsets.all(25),
             margin: const EdgeInsets.symmetric(horizontal: 25),
