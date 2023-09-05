@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:sushi_app/components/button.dart';
 import 'package:sushi_app/model/foodModel.dart';
+import 'package:sushi_app/model/shop.dart';
 import 'package:sushi_app/utils/colors.dart';
 
 class FoodDetail extends StatefulWidget {
@@ -18,7 +20,9 @@ class _FoodDetailState extends State<FoodDetail> {
   //method of decreamnet product
   void decreamentQuantity() {
     setState(() {
-      quantityCount--;
+      if (quantityCount > 0) {
+        quantityCount--;
+      }
     });
   }
 
@@ -29,7 +33,39 @@ class _FoodDetailState extends State<FoodDetail> {
     });
   }
 
-  void AddToCart(){}
+  void AddToCart() {
+    //only add to cart if there is something in the cart
+    if (quantityCount > 0) {
+      //get access to shop
+      final shop = context.read<Shop>();
+
+      //add to cart cart
+      shop.addToCart(widget.food, quantityCount);
+
+      //let the user know it was added successful
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          backgroundColor: AppColors.primaryColor,
+          content: const Text("Succssfully added to cart", style: TextStyle(
+            color: Colors.white
+          )),
+          actions: [
+            IconButton(
+              onPressed: () {
+                //pop once to remove dialog box
+                Navigator.pop(context);
+
+                //pop again to go revious screen
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.done, color: Colors.white,),
+            )
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +139,7 @@ class _FoodDetailState extends State<FoodDetail> {
             child: Column(
               children: [
                 Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "\$" + widget.food.price,
@@ -117,45 +153,49 @@ class _FoodDetailState extends State<FoodDetail> {
                         //minus button
                         Container(
                           decoration: BoxDecoration(
-                            color: AppColors.secondaryColor,
-                            shape: BoxShape.circle
-                          ),
+                              color: AppColors.secondaryColor,
+                              shape: BoxShape.circle),
                           child: IconButton(
-                              icon: const Icon(Icons.remove, color: Colors.white,), 
+                              icon: const Icon(
+                                Icons.remove,
+                                color: Colors.white,
+                              ),
                               onPressed: decreamentQuantity),
                         ),
 
-
                         //quantity of products
-                        const SizedBox(width: 20,),
-                        Text(quantityCount.toString(), style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold
-                          )),
-                        
-                        const SizedBox(width: 20,),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Text(quantityCount.toString(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold)),
+
+                        const SizedBox(
+                          width: 20,
+                        ),
                         //add button
                         Container(
                           decoration: BoxDecoration(
-                            color: AppColors.secondaryColor,
-                            shape: BoxShape.circle
-                          ),
+                              color: AppColors.secondaryColor,
+                              shape: BoxShape.circle),
                           child: IconButton(
-                              icon: const Icon(Icons.add, color: Colors.white,), 
+                              icon: const Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ),
                               onPressed: increamentQuantuty),
                         ),
-                        
-                        
-                     
                       ],
                     )
                   ],
                 ),
-                const SizedBox(height: 20,),
-                MyButton(
-                  text: "Add To Cart", 
-                  onTap:AddToCart)
+                const SizedBox(
+                  height: 20,
+                ),
+                MyButton(text: "Add To Cart", onTap: AddToCart)
               ],
             ),
           )
